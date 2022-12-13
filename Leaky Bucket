@@ -1,0 +1,47 @@
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+	    Scanner sc=new Scanner(System.in);
+		int bucket_rem=0,bucket_cap=4,rate=3,sent,recv;
+		int n;
+		n=sc.nextInt();
+		int a[]=new int[20];
+		for(int i=1;i<=n;i++)
+		    a[i]=sc.nextInt();
+		System.out.println("Clock \t Packet size \t accept \t sent \t remaining");
+		for(int i=1;i<=n;i++)
+		{
+		    if(a[i]!=0)
+		    {
+		        if(bucket_rem+a[i]>bucket_cap)
+		            recv=-1;
+		        else{
+		            recv=a[i];
+		            bucket_rem+=a[i];
+		        }      
+		    }
+		    else
+		    recv=0;
+		   if(bucket_rem!=0)
+		   {
+		       if(bucket_rem<rate)
+		       {
+		           sent = bucket_rem;
+		           bucket_rem=0;
+		       }
+		       else{
+		           sent = rate;
+		           bucket_rem=bucket_rem-rate;
+		       }
+		   }
+		   else
+		   sent =0;
+		   if(recv==-1)
+		   System.out.println(i +"\t\t" + a[i] + "dropped \t\t" + sent + "\t\t" + bucket_rem);
+		   else
+		   System.out.println(i +"\t\t" + a[i] +  "\t\t" +recv+"\t\t"+ sent + "\t\t" + bucket_rem);
+		   
+		}
+	}
+}
